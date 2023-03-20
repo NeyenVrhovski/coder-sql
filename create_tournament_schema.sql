@@ -44,12 +44,6 @@ create table players (
     id_team int not null
 );
 
-alter table teams
-add foreign key (dni_dt) references dt(dni_dt);
-
-alter table dt
-add foreign key (id_team) references teams(id_team);
-
 alter table players
 add foreign key (id_team) references teams(id_team);
 

@@ -57,16 +57,13 @@ create table matches (
 	id_match int not null primary key auto_increment,
     match_date datetime not null,
     id_tournament int not null,
-    id_local int not null,
-    id_visitor int not null,
+    id_team int not null,
     dni_referee int not null,
-    goals_local tinyint not null,
-    goals_visitor tinyint not null,
+    goals tinyint not null,
     penalties boolean not null,
-    res_penalties_local tinyint,
-    res_penalties_visitor tinyint,
+    res_penalties tinyint,
     foreign key (id_tournament) references tournaments(id_tournament),
-    foreign key (id_local) references teams(id_team),
-    foreign key (id_visitor) references teams(id_team),
+    foreign key (id_team) references teams(id_team),
     foreign key (dni_referee) references referees(dni_referee)
 );
+

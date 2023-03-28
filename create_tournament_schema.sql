@@ -114,3 +114,44 @@ values
 ('2018-12-09 21:00:00', 1, 4, 12546789, 3, false, null),
 ('2012-02-22 09:00:00', 3, 1, 12546789, 5, false, null),
 ('2017-08-21 21:30:00', 4, 4, 32435443, 1, true, 6);
+
+create view matches_per_team as
+select a.id_team, b.team_name, count(*) matches_played
+from matches a
+left join teams b
+on a.id_team = b.id_team
+group by id_team
+order by matches_played desc;
+
+create view goals_per_team as 
+select a.id_team, b.team_name, sum(a.goals) total_goals
+from matches a
+left join teams b
+on a.id_team = b.id_team
+group by id_team
+order by total_goals desc;
+
+create view matches_per_tournament as 
+select a.id_tournament, b.tournament_name, count(*) matches_per_tournament
+from matches a 
+left join tournaments b
+on a.id_tournament = b.id_tournament
+group by id_tournament
+order by matches_per_tournament desc;
+
+create view matches_per_referee as 
+select a.dni_referee, b.referee_firstname, b.referee_lastname, count(*) matches_participated
+from matches a 
+left join referees b
+on a.dni_referee = b.dni_referee
+group by dni_referee
+order by matches_participated desc;
+
+create view full_matches_report as
+select a.id_match, a.match_date, b.tournament_name, c.team_name, d.referee_firstname, d.referee_lastname, a.goals, a.penalties, a.res_penalties from matches a
+left join tournaments b
+on a.id_tournament = b.id_tournament
+left join teams c
+on a.id_team = c.id_team
+left join referees d
+on a.dni_referee = d.dni_referee;

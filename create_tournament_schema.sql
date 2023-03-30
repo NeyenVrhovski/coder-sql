@@ -155,3 +155,19 @@ left join teams c
 on a.id_team = c.id_team
 left join referees d
 on a.dni_referee = d.dni_referee;
+
+create function quitar_espacios(texto varchar(40)) 
+returns varchar(40)
+deterministic
+return (
+	select replace(texto, ' ', '')
+);
+
+create function conseguir_nombre_dt(dni int)
+returns varchar(80)
+reads sql data
+return (
+	select concat(dt_lastname, ', ', dt_firstname)
+    from dt
+    where dni_dt = dni
+);
